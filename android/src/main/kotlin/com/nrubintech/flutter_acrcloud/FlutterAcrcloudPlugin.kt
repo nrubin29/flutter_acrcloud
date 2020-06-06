@@ -132,7 +132,6 @@ public class FlutterAcrcloudPlugin: FlutterPlugin, MethodCallHandler, PluginRegi
 
   private inner class ACRListener : IACRCloudListener {
     override fun onResult(result: ACRCloudResult?) {
-      println(result?.result)
       client.stopRecordToRecognize()
       isListening = false
       channel.invokeMethod("result", result?.result)

@@ -1,7 +1,6 @@
 name: flutter_acrcloud
 description: A Flutter plugin for the ACRCloud music recognition API.
 version: 0.0.1
-author: Noah Rubin <nrubin29@gmail.com>
 homepage: https://github.com/nrubin29/flutter_acrcloud
 
 environment:
