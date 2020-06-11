@@ -19,12 +19,6 @@ ACRCloudResponse _$ACRCloudResponseFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$ACRCloudResponseToJson(ACRCloudResponse instance) =>
-    <String, dynamic>{
-      'status': instance.status,
-      'metadata': instance.metadata,
-    };
-
 ACRCloudResponseStatus _$ACRCloudResponseStatusFromJson(
     Map<String, dynamic> json) {
   return ACRCloudResponseStatus(
@@ -33,14 +27,6 @@ ACRCloudResponseStatus _$ACRCloudResponseStatusFromJson(
     json['code'] as int,
   );
 }
-
-Map<String, dynamic> _$ACRCloudResponseStatusToJson(
-        ACRCloudResponseStatus instance) =>
-    <String, dynamic>{
-      'msg': instance.msg,
-      'version': instance.version,
-      'code': instance.code,
-    };
 
 ACRCloudResponseMetadata _$ACRCloudResponseMetadataFromJson(
     Map<String, dynamic> json) {
@@ -52,12 +38,6 @@ ACRCloudResponseMetadata _$ACRCloudResponseMetadataFromJson(
         ?.toList(),
   );
 }
-
-Map<String, dynamic> _$ACRCloudResponseMetadataToJson(
-        ACRCloudResponseMetadata instance) =>
-    <String, dynamic>{
-      'music': instance.music,
-    };
 
 ACRCloudResponseMusicItem _$ACRCloudResponseMusicItemFromJson(
     Map<String, dynamic> json) {
@@ -81,21 +61,6 @@ ACRCloudResponseMusicItem _$ACRCloudResponseMusicItemFromJson(
   );
 }
 
-Map<String, dynamic> _$ACRCloudResponseMusicItemToJson(
-        ACRCloudResponseMusicItem instance) =>
-    <String, dynamic>{
-      'label': instance.label,
-      'album': instance.album,
-      'artists': instance.artists,
-      'acrid': instance.acrId,
-      'result_from': instance.resultFrom,
-      'title': instance.title,
-      'duration_ms': instance.durationMs,
-      'release_date': instance.releaseDate,
-      'score': instance.score,
-      'play_offset_ms': instance.playOffsetMs,
-    };
-
 ACRCloudResponseAlbum _$ACRCloudResponseAlbumFromJson(
     Map<String, dynamic> json) {
   return ACRCloudResponseAlbum(
@@ -103,21 +68,9 @@ ACRCloudResponseAlbum _$ACRCloudResponseAlbumFromJson(
   );
 }
 
-Map<String, dynamic> _$ACRCloudResponseAlbumToJson(
-        ACRCloudResponseAlbum instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-    };
-
 ACRCloudResponseArtist _$ACRCloudResponseArtistFromJson(
     Map<String, dynamic> json) {
   return ACRCloudResponseArtist(
     json['name'] as String,
   );
 }
-
-Map<String, dynamic> _$ACRCloudResponseArtistToJson(
-        ACRCloudResponseArtist instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-    };

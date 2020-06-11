@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_acrcloud/acrcloud_response.dart';
 import 'package:rxdart/rxdart.dart';
 
+export 'acrcloud_response.dart';
+
 /// A configuration object with the values necessary to access the ACRCloud API.
 class ACRCloudConfig {
   String accessKey;
