@@ -3,7 +3,7 @@
 A Flutter plugin for the ACRCloud music recognition API.
 This is a third-party plugin; there is no relation between the developer and ACRCloud.
 
-**Note**: I built this plugin to support [a personal project](https://github.com/nrubin29/simplescrobble-mobile).
+**Note**: I built this plugin to support [a personal project](https://github.com/nrubin29/finale).
 As such, it is very bare bones and potentially buggy.
 If you encounter a bug or need a feature added, you can open an issue or, better yet, fix it yourself and submit a PR.
 
