@@ -6,7 +6,7 @@ part 'acrcloud_response.g.dart';
 @JsonSerializable()
 class ACRCloudResponse {
   ACRCloudResponseStatus status;
-  ACRCloudResponseMetadata metadata;
+  ACRCloudResponseMetadata? metadata;
 
   ACRCloudResponse(this.status, this.metadata);
 
@@ -41,8 +41,10 @@ class ACRCloudResponseMetadata {
 /// A single matching track.
 @JsonSerializable()
 class ACRCloudResponseMusicItem {
-  String label;
+  String? label;
+
   ACRCloudResponseAlbum album;
+
   List<ACRCloudResponseArtist> artists;
 
   @JsonKey(name: 'acrid')
