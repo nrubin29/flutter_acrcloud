@@ -18,18 +18,18 @@ class ACRCloudConfig {
 
 /// A recording session.
 class ACRCloudSession {
-  BehaviorSubject<ACRCloudResponse> _result;
+  BehaviorSubject<ACRCloudResponse?> _result;
 
   /// A Stream of volume values.
   BehaviorSubject<double> volume;
 
-  /// A Future which resolves to null if the session if [cancel]led, or an
+  /// A Future which resolves to null if the session is [cancel]led, or an
   /// [ACRCloudResponse] otherwise.
-  Future<ACRCloudResponse> result;
+  late Future<ACRCloudResponse?> result;
 
-  ACRCloudSession() {
-    _result = BehaviorSubject<ACRCloudResponse>();
-    volume = BehaviorSubject<double>();
+  ACRCloudSession()
+      : _result = BehaviorSubject<ACRCloudResponse?>(),
+        volume = BehaviorSubject<double>() {
     result = _result.first.catchError((_, __) => null,
         test: (error) => error is StateError && error.message == 'No element');
   }
@@ -48,12 +48,10 @@ class ACRCloudSession {
 
 /// The entry point for interacting with ACRCloud.
 class ACRCloud {
-  // The channel is optional because Android support isn't implemented yet.
-  static const MethodChannel _channel =
-      const OptionalMethodChannel('flutter_acrcloud');
+  static const MethodChannel _channel = const MethodChannel('flutter_acrcloud');
 
   static var isSetUp = false;
-  static ACRCloudSession _session;
+  static ACRCloudSession? _session;
 
   /// Set up ACRCloud according to the [ACRCloudConfig] passed. You should only
   /// call this function once, but subsequent calls will simply be ignored.
@@ -64,9 +62,9 @@ class ACRCloud {
 
     _channel.setMethodCallHandler((call) async {
       if (call.method == 'volume') {
-        _session.volume.add(call.arguments);
+        _session?.volume.add(call.arguments);
       } else if (call.method == 'result') {
-        _session._result
+        _session?._result
             .add(ACRCloudResponse.fromJson(json.decode(call.arguments)));
       }
     });
@@ -91,6 +89,6 @@ class ACRCloud {
     _session?.dispose();
     _session = ACRCloudSession();
     _channel.invokeMethod('listen');
-    return _session;
+    return _session!;
   }
 }

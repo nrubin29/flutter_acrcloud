@@ -12,7 +12,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ACRCloudResponseMusicItem music;
+  ACRCloudResponseMusicItem? music;
 
   @override
   void initState() {
@@ -31,54 +31,56 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             children: [
               Builder(
-                  builder: (context) => RaisedButton(
-                      onPressed: () async {
-                        setState(() {
-                          music = null;
-                        });
+                builder: (context) => ElevatedButton(
+                  onPressed: () async {
+                    setState(() {
+                      music = null;
+                    });
 
-                        final session = ACRCloud.startSession();
+                    final session = ACRCloud.startSession();
 
-                        showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (context) => AlertDialog(
-                                  title: Text('Listening...'),
-                                  content: StreamBuilder(
-                                    stream: session.volume,
-                                    initialData: 0,
-                                    builder: (context, snapshot) =>
-                                        Text(snapshot.data.toString()),
-                                  ),
-                                  actions: [
-                                    FlatButton(
-                                      child: Text('Cancel'),
-                                      onPressed: session.cancel,
-                                    )
-                                  ],
-                                ));
-
-                        final result = await session.result;
-                        Navigator.pop(context);
-
-                        setState(() {
-                          if (result == null) {
-                            // Cancelled
-                            return;
-                          } else if (result.metadata == null) {
-                            Scaffold.of(context).showSnackBar(SnackBar(
-                              content: Text('No result'),
+                    showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context) => AlertDialog(
+                              title: Text('Listening...'),
+                              content: StreamBuilder(
+                                stream: session.volume,
+                                initialData: 0,
+                                builder: (context, snapshot) =>
+                                    Text(snapshot.data.toString()),
+                              ),
+                              actions: [
+                                TextButton(
+                                  child: Text('Cancel'),
+                                  onPressed: session.cancel,
+                                )
+                              ],
                             ));
-                            return;
-                          }
 
-                          music = result.metadata.music.first;
-                        });
-                      },
-                      child: Text('Listen'))),
-              if (music != null) Text('Track: ${music.title}\n'),
-              if (music != null) Text('Album: ${music.album.name}\n'),
-              if (music != null) Text('Artist: ${music.artists.first.name}\n'),
+                    final result = await session.result;
+                    Navigator.pop(context);
+
+                    setState(() {
+                      if (result == null) {
+                        // Cancelled
+                        return;
+                      } else if (result.metadata == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('No result'),
+                        ));
+                        return;
+                      }
+
+                      music = result.metadata!.music.first;
+                    });
+                  },
+                  child: Text('Listen'),
+                ),
+              ),
+              if (music != null) Text('Track: ${music!.title}\n'),
+              if (music != null) Text('Album: ${music!.album.name}\n'),
+              if (music != null) Text('Artist: ${music!.artists.first.name}\n'),
             ],
           ),
         ),
