@@ -1,3 +1,8 @@
+## 0.1.1
+
+* **BREAKING**: Refactored to be a proper library. Now, you just need to `import 'package:flutter_acrcloud/flutter_acrcloud.dart'`.
+* Upgraded dependencies.
+
 ## 0.1.0
 
 * Added null safety.
