@@ -9,23 +9,23 @@ import 'package:rxdart/rxdart.dart';
 
 /// A configuration object with the values necessary to access the ACRCloud API.
 class ACRCloudConfig {
-  String accessKey;
-  String accessSecret;
-  String host;
+  final String accessKey;
+  final String accessSecret;
+  final String host;
 
-  ACRCloudConfig(this.accessKey, this.accessSecret, this.host);
+  const ACRCloudConfig(this.accessKey, this.accessSecret, this.host);
 }
 
 /// A recording session.
 class ACRCloudSession {
-  BehaviorSubject<ACRCloudResponse?> _result;
+  final BehaviorSubject<ACRCloudResponse?> _result;
 
   /// A Stream of volume values.
-  BehaviorSubject<double> volume;
+  final BehaviorSubject<double> volume;
 
   /// A Future which resolves to null if the session is [cancel]led, or an
   /// [ACRCloudResponse] otherwise.
-  late Future<ACRCloudResponse?> result;
+  late final Future<ACRCloudResponse?> result;
 
   ACRCloudSession()
       : _result = BehaviorSubject<ACRCloudResponse?>(),
@@ -48,7 +48,7 @@ class ACRCloudSession {
 
 /// The entry point for interacting with ACRCloud.
 class ACRCloud {
-  static const MethodChannel _channel = const MethodChannel('flutter_acrcloud');
+  static const _channel = MethodChannel('flutter_acrcloud');
 
   static var isSetUp = false;
   static ACRCloudSession? _session;
