@@ -1,3 +1,9 @@
+## 0.1.3
+
+* **BREAKING**: Renamed `volume` to `volumeStream`. It is now just a normal `Stream` instead of a `BehaviorSubject`.
+* Removed dependency on `rxdart`.
+* Upgraded dependencies.
+
 ## 0.1.2
 
 * Made all JSON classes const.

@@ -5,7 +5,6 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_acrcloud/src/acrcloud_response.dart';
-import 'package:rxdart/rxdart.dart';
 
 /// A configuration object with the values necessary to access the ACRCloud API.
 class ACRCloudConfig {
@@ -18,21 +17,19 @@ class ACRCloudConfig {
 
 /// A recording session.
 class ACRCloudSession {
-  final BehaviorSubject<ACRCloudResponse?> _result;
-
-  /// A Stream of volume values.
-  final BehaviorSubject<double> volume;
+  final Completer<ACRCloudResponse?> _result;
+  final StreamController<double> _volume;
 
   /// A Future which resolves to null if the session is [cancel]led, or an
   /// [ACRCloudResponse] otherwise.
-  late final Future<ACRCloudResponse?> result;
+  Future<ACRCloudResponse?> get result => _result.future;
+
+  /// A Stream of volume values.
+  Stream<double> get volumeStream => _volume.stream;
 
   ACRCloudSession()
-      : _result = BehaviorSubject<ACRCloudResponse?>(),
-        volume = BehaviorSubject<double>() {
-    result = _result.first.catchError((_, __) => null,
-        test: (error) => error is StateError && error.message == 'No element');
-  }
+      : _result = Completer<ACRCloudResponse?>(),
+        _volume = StreamController<double>();
 
   /// Cancel this session.
   void cancel() {
@@ -41,8 +38,11 @@ class ACRCloudSession {
   }
 
   void dispose() {
-    volume.close();
-    _result.close();
+    _volume.close();
+
+    if (!_result.isCompleted) {
+      _result.complete();
+    }
   }
 }
 
@@ -53,8 +53,10 @@ class ACRCloud {
   static var isSetUp = false;
   static ACRCloudSession? _session;
 
-  /// Set up ACRCloud according to the [ACRCloudConfig] passed. You should only
-  /// call this function once, but subsequent calls will simply be ignored.
+  /// Set up ACRCloud according to the [ACRCloudConfig] passed.
+  ///
+  /// You should only call this function once, but subsequent calls will simply
+  /// be ignored.
   static Future<void> setUp(ACRCloudConfig config) async {
     if (isSetUp) {
       return;
@@ -62,10 +64,10 @@ class ACRCloud {
 
     _channel.setMethodCallHandler((call) async {
       if (call.method == 'volume') {
-        _session?.volume.add(call.arguments);
+        _session?._volume.add(call.arguments);
       } else if (call.method == 'result') {
         _session?._result
-            .add(ACRCloudResponse.fromJson(json.decode(call.arguments)));
+            .complete(ACRCloudResponse.fromJson(json.decode(call.arguments)));
       }
     });
 
@@ -78,8 +80,10 @@ class ACRCloud {
     isSetUp = true;
   }
 
-  /// Begin recognizing a track. Returns an [ACRCloudSession] instance that can
-  /// be used to control the session.
+  /// Begin recognizing a track.
+  ///
+  /// Returns an [ACRCloudSession] instance that can be used to control the
+  /// session.
   static ACRCloudSession startSession() {
     if (!isSetUp) {
       throw StateError(

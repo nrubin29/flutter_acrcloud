@@ -40,47 +40,50 @@ class _MyAppState extends State<MyApp> {
                     final session = ACRCloud.startSession();
 
                     showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (context) => AlertDialog(
-                              title: Text('Listening...'),
-                              content: StreamBuilder(
-                                stream: session.volume,
-                                initialData: 0,
-                                builder: (context, snapshot) =>
-                                    Text(snapshot.data.toString()),
-                              ),
-                              actions: [
-                                TextButton(
-                                  child: Text('Cancel'),
-                                  onPressed: session.cancel,
-                                )
-                              ],
-                            ));
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (context) => AlertDialog(
+                        title: Text('Listening...'),
+                        content: StreamBuilder(
+                          stream: session.volumeStream,
+                          initialData: 0,
+                          builder: (_, snapshot) =>
+                              Text(snapshot.data.toString()),
+                        ),
+                        actions: [
+                          TextButton(
+                            child: Text('Cancel'),
+                            onPressed: session.cancel,
+                          )
+                        ],
+                      ),
+                    );
 
                     final result = await session.result;
                     Navigator.pop(context);
 
-                    setState(() {
-                      if (result == null) {
-                        // Cancelled
-                        return;
-                      } else if (result.metadata == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text('No result'),
-                        ));
-                        return;
-                      }
+                    if (result == null) {
+                      // Cancelled.
+                      return;
+                    } else if (result.metadata == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('No result.'),
+                      ));
+                      return;
+                    }
 
+                    setState(() {
                       music = result.metadata!.music.first;
                     });
                   },
                   child: Text('Listen'),
                 ),
               ),
-              if (music != null) Text('Track: ${music!.title}\n'),
-              if (music != null) Text('Album: ${music!.album.name}\n'),
-              if (music != null) Text('Artist: ${music!.artists.first.name}\n'),
+              if (music != null) ...[
+                Text('Track: ${music!.title}\n'),
+                Text('Album: ${music!.album.name}\n'),
+                Text('Artist: ${music!.artists.first.name}\n'),
+              ],
             ],
           ),
         ),
