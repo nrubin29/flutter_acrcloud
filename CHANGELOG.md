@@ -1,3 +1,8 @@
+## 0.1.4
+
+* Updated ACRCloud SDK to v1.6.2.1
+* This should also fix issues with running apps on the iOS simulator.
+
 ## 0.1.3
 
 * **BREAKING**: Renamed `volume` to `volumeStream`. It is now just a normal `Stream` instead of a `BehaviorSubject`.

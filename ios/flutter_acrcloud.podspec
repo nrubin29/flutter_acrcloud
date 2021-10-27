@@ -17,7 +17,7 @@ A Flutter plugin for the ACRCloud music recognition API
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
   s.platform = :ios, '8.0'
-  s.vendored_libraries = 'Libs/acrcloud/libACRCloud_IOS_SDK.a'
+  s.vendored_frameworks = 'Libs/ACRCloudSDK.xcframework'
   s.frameworks = 'AudioToolbox', 'AVFoundation', 'Security'
   s.library = 'stdc++'
 
