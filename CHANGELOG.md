@@ -1,3 +1,7 @@
+## 0.1.5
+
+* [iOS] Set `ENABLE_BITCODE` to `NO` to resolve potential build issues.
+
 ## 0.1.4
 
 * Updated ACRCloud SDK to v1.6.2.1
