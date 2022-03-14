@@ -20,14 +20,14 @@ class ACRCloudSession {
   final Completer<ACRCloudResponse?> _result;
   final StreamController<double> _volume;
 
-  /// A Future which resolves to null if the session is [cancel]led, or an
+  /// A [Future] which resolves to `null` if the session is [cancel]led, or an
   /// [ACRCloudResponse] otherwise.
   Future<ACRCloudResponse?> get result => _result.future;
 
-  /// A Stream of volume values.
+  /// A [Stream] of volume values.
   Stream<double> get volumeStream => _volume.stream;
 
-  ACRCloudSession()
+  ACRCloudSession._()
       : _result = Completer<ACRCloudResponse?>(),
         _volume = StreamController<double>();
 
@@ -50,15 +50,22 @@ class ACRCloudSession {
 class ACRCloud {
   static const _channel = MethodChannel('flutter_acrcloud');
 
-  static var isSetUp = false;
+  static var _isSetUp = false;
   static ACRCloudSession? _session;
+
+  /// Whether the client has been set up.
+  ///
+  /// You must call [setUp] before calling [startSession].
+  static bool get isSetUp => _isSetUp;
+
+  const ACRCloud._();
 
   /// Set up ACRCloud according to the [ACRCloudConfig] passed.
   ///
-  /// You should only call this function once, but subsequent calls will simply
-  /// be ignored.
+  /// You only need to call this function once; subsequent calls will be
+  /// ignored.
   static Future<void> setUp(ACRCloudConfig config) async {
-    if (isSetUp) {
+    if (_isSetUp) {
       return;
     }
 
@@ -77,7 +84,7 @@ class ACRCloud {
       'host': config.host
     });
 
-    isSetUp = true;
+    _isSetUp = true;
   }
 
   /// Begin recognizing a track.
@@ -85,13 +92,13 @@ class ACRCloud {
   /// Returns an [ACRCloudSession] instance that can be used to control the
   /// session.
   static ACRCloudSession startSession() {
-    if (!isSetUp) {
+    if (!_isSetUp) {
       throw StateError(
           'ACRCloud is not set up! You forgot to call ACRCloud.setUp()');
     }
 
     _session?.dispose();
-    _session = ACRCloudSession();
+    _session = ACRCloudSession._();
     _channel.invokeMethod('listen');
     return _session!;
   }
