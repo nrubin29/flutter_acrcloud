@@ -1,3 +1,8 @@
+## 0.1.6
+
+* [Android] Fixed compilation error for Flutter 3.
+* [Android] Cleaned up deprecated code.
+
 ## 0.1.5
 
 * [iOS] Set `ENABLE_BITCODE` to `NO` to resolve potential build issues.
