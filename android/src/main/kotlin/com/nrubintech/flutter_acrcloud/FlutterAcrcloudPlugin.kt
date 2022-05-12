@@ -142,8 +142,8 @@ public class FlutterAcrcloudPlugin: FlutterPlugin, MethodCallHandler, PluginRegi
     }
   }
 
-  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>?, grantResults: IntArray?): Boolean {
-    if (requestCode == 29 && grantResults != null) {
+  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray): Boolean {
+    if (requestCode == 29) {
       isPermissionGranted = grantResults.isNotEmpty() && grantResults.first() == PackageManager.PERMISSION_GRANTED
       onPermissionGrant?.invoke()
 
