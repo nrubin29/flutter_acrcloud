@@ -4,19 +4,19 @@ version: 0.1.5
 homepage: https://github.com/nrubin29/flutter_acrcloud
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=1.10.0"
+  sdk: ">=2.17.0 <3.0.0"
+  flutter: ">=3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  json_annotation: ^4.3.0
+  json_annotation: ^4.5.0
 
 dev_dependencies:
-  build_runner: ^2.1.4
+  build_runner: ^2.1.10
   flutter_test:
     sdk: flutter
-  json_serializable: ^6.0.1
+  json_serializable: ^6.2.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
