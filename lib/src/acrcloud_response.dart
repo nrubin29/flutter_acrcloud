@@ -32,9 +32,14 @@ class ACRCloudResponseStatus {
 /// The metadata of the response, which contains all of the matching tracks.
 @JsonSerializable()
 class ACRCloudResponseMetadata {
+  @JsonKey(defaultValue: <ACRCloudResponseMusicItem>[])
   final List<ACRCloudResponseMusicItem> music;
 
-  const ACRCloudResponseMetadata(this.music);
+  @JsonKey(
+      name: 'custom_files', defaultValue: <ACRCloudResponseCustomFileItem>[])
+  final List<ACRCloudResponseCustomFileItem> customFiles;
+
+  const ACRCloudResponseMetadata(this.music, this.customFiles);
 
   factory ACRCloudResponseMetadata.fromJson(Map<String, dynamic> json) =>
       _$ACRCloudResponseMetadataFromJson(json);
@@ -104,4 +109,27 @@ class ACRCloudResponseArtist {
 
   factory ACRCloudResponseArtist.fromJson(Map<String, dynamic> json) =>
       _$ACRCloudResponseArtistFromJson(json);
+}
+
+/// A single matching Custom File.
+@JsonSerializable()
+class ACRCloudResponseCustomFileItem {
+  @JsonKey(name: 'acrid')
+  final String acrId;
+
+  final String title;
+
+  @JsonKey(name: 'duration_ms')
+  final int durationMs;
+
+  final int score;
+
+  @JsonKey(name: 'play_offset_ms')
+  final int playOffsetMs;
+
+  const ACRCloudResponseCustomFileItem(
+      this.acrId, this.title, this.durationMs, this.score, this.playOffsetMs);
+
+  factory ACRCloudResponseCustomFileItem.fromJson(Map<String, dynamic> json) =>
+      _$ACRCloudResponseCustomFileItemFromJson(json);
 }

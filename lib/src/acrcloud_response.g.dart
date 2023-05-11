@@ -6,63 +6,74 @@ part of flutter_acrcloud;
 // JsonSerializableGenerator
 // **************************************************************************
 
-ACRCloudResponse _$ACRCloudResponseFromJson(Map<String, dynamic> json) {
-  return ACRCloudResponse(
-    ACRCloudResponseStatus.fromJson(json['status'] as Map<String, dynamic>),
-    json['metadata'] == null
-        ? null
-        : ACRCloudResponseMetadata.fromJson(
-            json['metadata'] as Map<String, dynamic>),
-  );
-}
+ACRCloudResponse _$ACRCloudResponseFromJson(Map<String, dynamic> json) =>
+    ACRCloudResponse(
+      ACRCloudResponseStatus.fromJson(json['status'] as Map<String, dynamic>),
+      json['metadata'] == null
+          ? null
+          : ACRCloudResponseMetadata.fromJson(
+              json['metadata'] as Map<String, dynamic>),
+    );
 
 ACRCloudResponseStatus _$ACRCloudResponseStatusFromJson(
-    Map<String, dynamic> json) {
-  return ACRCloudResponseStatus(
-    json['msg'] as String,
-    json['version'] as String,
-    json['code'] as int,
-  );
-}
+        Map<String, dynamic> json) =>
+    ACRCloudResponseStatus(
+      json['msg'] as String,
+      json['version'] as String,
+      json['code'] as int,
+    );
 
 ACRCloudResponseMetadata _$ACRCloudResponseMetadataFromJson(
-    Map<String, dynamic> json) {
-  return ACRCloudResponseMetadata(
-    (json['music'] as List<dynamic>)
-        .map((e) =>
-            ACRCloudResponseMusicItem.fromJson(e as Map<String, dynamic>))
-        .toList(),
-  );
-}
+        Map<String, dynamic> json) =>
+    ACRCloudResponseMetadata(
+      (json['music'] as List<dynamic>?)
+              ?.map((e) =>
+                  ACRCloudResponseMusicItem.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      (json['custom_files'] as List<dynamic>?)
+              ?.map((e) => ACRCloudResponseCustomFileItem.fromJson(
+                  e as Map<String, dynamic>))
+              .toList() ??
+          [],
+    );
 
 ACRCloudResponseMusicItem _$ACRCloudResponseMusicItemFromJson(
-    Map<String, dynamic> json) {
-  return ACRCloudResponseMusicItem(
-    json['label'] as String?,
-    ACRCloudResponseAlbum.fromJson(json['album'] as Map<String, dynamic>),
-    (json['artists'] as List<dynamic>)
-        .map((e) => ACRCloudResponseArtist.fromJson(e as Map<String, dynamic>))
-        .toList(),
-    json['acrid'] as String,
-    json['result_from'] as int,
-    json['title'] as String,
-    json['duration_ms'] as int,
-    json['release_date'] as String,
-    json['score'] as int,
-    json['play_offset_ms'] as int,
-  );
-}
+        Map<String, dynamic> json) =>
+    ACRCloudResponseMusicItem(
+      json['label'] as String?,
+      ACRCloudResponseAlbum.fromJson(json['album'] as Map<String, dynamic>),
+      (json['artists'] as List<dynamic>)
+          .map(
+              (e) => ACRCloudResponseArtist.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      json['acrid'] as String,
+      json['result_from'] as int,
+      json['title'] as String,
+      json['duration_ms'] as int,
+      json['release_date'] as String,
+      json['score'] as int,
+      json['play_offset_ms'] as int,
+    );
 
 ACRCloudResponseAlbum _$ACRCloudResponseAlbumFromJson(
-    Map<String, dynamic> json) {
-  return ACRCloudResponseAlbum(
-    json['name'] as String,
-  );
-}
+        Map<String, dynamic> json) =>
+    ACRCloudResponseAlbum(
+      json['name'] as String,
+    );
 
 ACRCloudResponseArtist _$ACRCloudResponseArtistFromJson(
-    Map<String, dynamic> json) {
-  return ACRCloudResponseArtist(
-    json['name'] as String,
-  );
-}
+        Map<String, dynamic> json) =>
+    ACRCloudResponseArtist(
+      json['name'] as String,
+    );
+
+ACRCloudResponseCustomFileItem _$ACRCloudResponseCustomFileItemFromJson(
+        Map<String, dynamic> json) =>
+    ACRCloudResponseCustomFileItem(
+      json['acrid'] as String,
+      json['title'] as String,
+      json['duration_ms'] as int,
+      json['score'] as int,
+      json['play_offset_ms'] as int,
+    );
