@@ -3,42 +3,42 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test(
-    'Should parse music JSON metadata',
+    'Parse music JSON metadata',
     () {
-      final response = ACRCloudResponse.fromJson(mockMusicFilesData);
+      final response = ACRCloudResponse.fromJson(_mockMusicFilesData);
 
-      final data = response.metadata?.music?.first;
+      final data = response.metadata!.music.first;
 
-      expect(data?.label, 'XL Recording');
-      expect(data?.title, 'Hello');
-      expect(data?.acrId, '6049f11da7095e8bb8266871d4a70873');
-      expect(data?.durationMs, 295000);
-      expect(data?.score, 100);
-      expect(data?.playOffsetMs, 9040);
-      expect(data?.artists.first.name, 'Adele');
-      expect(data?.releaseDate, '2015-10-23');
-      expect(data?.album.name, 'Hello');
+      expect(data.label, 'XL Recording');
+      expect(data.title, 'Hello');
+      expect(data.acrId, '6049f11da7095e8bb8266871d4a70873');
+      expect(data.durationMs, 295000);
+      expect(data.score, 100);
+      expect(data.playOffsetMs, 9040);
+      expect(data.artists.first.name, 'Adele');
+      expect(data.releaseDate, '2015-10-23');
+      expect(data.album.name, 'Hello');
     },
   );
 
   test(
-    'Should parse custom files JSON metadata',
+    'Parse custom files JSON metadata',
     () {
-      final response = ACRCloudResponse.fromJson(mockCustomFilesData);
+      final response = ACRCloudResponse.fromJson(_mockCustomFilesData);
 
-      final data = response.metadata?.customFiles?.first;
+      final data = response.metadata!.customFiles.first;
 
-      expect(data?.title, 'You are beautiful');
-      expect(data?.acrId, '5343bc191634b042622bf474ed46121a');
-      expect(data?.durationMs, 852037);
-      expect(data?.score, 100);
-      expect(data?.playOffsetMs, 397791);
+      expect(data.title, 'You are beautiful');
+      expect(data.acrId, '5343bc191634b042622bf474ed46121a');
+      expect(data.durationMs, 852037);
+      expect(data.score, 100);
+      expect(data.playOffsetMs, 397791);
     },
   );
 }
 
 // Sample Metadata from https://docs.acrcloud.com/metadata/custom-files
-final mockCustomFilesData = {
+const _mockCustomFilesData = {
   'status': {'msg': 'Success', 'code': 0, 'version': '1.0'},
   'metadata': {
     'timestamp_utc': '2015-07-27 12:56:46',
@@ -59,7 +59,7 @@ final mockCustomFilesData = {
 };
 
 // Sample Metadata from https://docs.acrcloud.com/metadata/music
-final mockMusicFilesData = {
+const _mockMusicFilesData = {
   'metadata': {
     'timestamp_utc': '2020-01-19 02:58:28',
     'music': [

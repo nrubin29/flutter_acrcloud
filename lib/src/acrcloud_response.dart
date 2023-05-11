@@ -32,10 +32,12 @@ class ACRCloudResponseStatus {
 /// The metadata of the response, which contains all of the matching tracks.
 @JsonSerializable()
 class ACRCloudResponseMetadata {
-  final List<ACRCloudResponseMusicItem>? music;
+  @JsonKey(defaultValue: <ACRCloudResponseMusicItem>[])
+  final List<ACRCloudResponseMusicItem> music;
 
-  @JsonKey(name: 'custom_files')
-  final List<ACRCloudResponseCustomFileItem>? customFiles;
+  @JsonKey(
+      name: 'custom_files', defaultValue: <ACRCloudResponseCustomFileItem>[])
+  final List<ACRCloudResponseCustomFileItem> customFiles;
 
   const ACRCloudResponseMetadata(this.music, this.customFiles);
 
@@ -109,7 +111,7 @@ class ACRCloudResponseArtist {
       _$ACRCloudResponseArtistFromJson(json);
 }
 
-/// A single matching Custom File
+/// A single matching Custom File.
 @JsonSerializable()
 class ACRCloudResponseCustomFileItem {
   @JsonKey(name: 'acrid')

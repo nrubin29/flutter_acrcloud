@@ -27,13 +27,15 @@ ACRCloudResponseMetadata _$ACRCloudResponseMetadataFromJson(
         Map<String, dynamic> json) =>
     ACRCloudResponseMetadata(
       (json['music'] as List<dynamic>?)
-          ?.map((e) =>
-              ACRCloudResponseMusicItem.fromJson(e as Map<String, dynamic>))
-          .toList(),
+              ?.map((e) =>
+                  ACRCloudResponseMusicItem.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       (json['custom_files'] as List<dynamic>?)
-          ?.map((e) => ACRCloudResponseCustomFileItem.fromJson(
-              e as Map<String, dynamic>))
-          .toList(),
+              ?.map((e) => ACRCloudResponseCustomFileItem.fromJson(
+                  e as Map<String, dynamic>))
+              .toList() ??
+          [],
     );
 
 ACRCloudResponseMusicItem _$ACRCloudResponseMusicItemFromJson(
