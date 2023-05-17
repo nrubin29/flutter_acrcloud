@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of flutter_acrcloud;
+part of 'acrcloud_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
