@@ -1,3 +1,7 @@
+## 0.2.0
+
+* `ACRCloudResponse` now includes Custom Files metadata if relevant. Thanks, MichaelCadavillo!
+
 ## 0.1.6
 
 * [Android] Fixed compilation error for Flutter 3.
