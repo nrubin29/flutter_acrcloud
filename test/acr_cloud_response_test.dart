@@ -2,11 +2,9 @@ import 'package:flutter_acrcloud/src/acrcloud_response.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test(
-    'Parse music JSON metadata',
-    () {
+  group(ACRCloudResponse, () {
+    test('parses music JSON metadata', () {
       final response = ACRCloudResponse.fromJson(_mockMusicFilesData);
-
       final data = response.metadata!.music.first;
 
       expect(data.label, 'XL Recording');
@@ -18,14 +16,10 @@ void main() {
       expect(data.artists.first.name, 'Adele');
       expect(data.releaseDate, '2015-10-23');
       expect(data.album.name, 'Hello');
-    },
-  );
+    });
 
-  test(
-    'Parse custom files JSON metadata',
-    () {
+    test('parses custom files JSON metadata', () {
       final response = ACRCloudResponse.fromJson(_mockCustomFilesData);
-
       final data = response.metadata!.customFiles.first;
 
       expect(data.title, 'You are beautiful');
@@ -33,8 +27,8 @@ void main() {
       expect(data.durationMs, 852037);
       expect(data.score, 100);
       expect(data.playOffsetMs, 397791);
-    },
-  );
+    });
+  });
 }
 
 // Sample Metadata from https://docs.acrcloud.com/metadata/custom-files

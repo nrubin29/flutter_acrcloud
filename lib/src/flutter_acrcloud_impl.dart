@@ -17,8 +17,8 @@ class ACRCloudConfig {
 
 /// A recording session.
 class ACRCloudSession {
-  final Completer<ACRCloudResponse?> _result;
-  final StreamController<double> _volume;
+  final _result = Completer<ACRCloudResponse?>();
+  final _volume = StreamController<double>();
 
   /// A [Future] which resolves to `null` if the session is [cancel]led, or an
   /// [ACRCloudResponse] otherwise.
@@ -27,9 +27,7 @@ class ACRCloudSession {
   /// A [Stream] of volume values.
   Stream<double> get volumeStream => _volume.stream;
 
-  ACRCloudSession._()
-      : _result = Completer<ACRCloudResponse?>(),
-        _volume = StreamController<double>();
+  ACRCloudSession._();
 
   /// Cancel this session.
   void cancel() {
