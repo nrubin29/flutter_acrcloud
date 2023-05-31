@@ -1,3 +1,7 @@
+## 0.2.1
+
+* Bumped Kotlin and Gradle versions.
+
 ## 0.2.0
 
 * `ACRCloudResponse` now includes Custom Files metadata if relevant. Thanks, MichaelCadavillo!

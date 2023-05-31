@@ -1,6 +1,6 @@
 name: flutter_acrcloud
 description: A Flutter plugin for the ACRCloud music recognition API. This plugin provides a simple interface for using ACRCloud to recognize music from the device's microphone.
-version: 0.2.0
+version: 0.2.1
 homepage: https://github.com/nrubin29/flutter_acrcloud
 
 environment:
