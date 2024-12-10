@@ -1,3 +1,7 @@
+## 0.2.2
+
+* Updated Gradle files.
+
 ## 0.2.1
 
 * Bumped Kotlin and Gradle versions.
