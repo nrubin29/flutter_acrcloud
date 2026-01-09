@@ -1,3 +1,7 @@
+## 1.0.0
+
+* Updated Android libraries to support 16 KB page sizes.
+
 ## 0.2.2
 
 * Updated Gradle files.
