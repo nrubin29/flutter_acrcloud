@@ -24,9 +24,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Flutter_ACRCloud example app'),
-        ),
+        appBar: AppBar(title: const Text('Flutter_ACRCloud example app')),
         body: Center(
           child: Column(
             children: [
@@ -54,7 +52,7 @@ class _MyAppState extends State<MyApp> {
                           TextButton(
                             child: Text('Cancel'),
                             onPressed: session.cancel,
-                          )
+                          ),
                         ],
                       ),
                     );
@@ -66,9 +64,9 @@ class _MyAppState extends State<MyApp> {
                       // Cancelled.
                       return;
                     } else if (result.metadata == null) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text('No result.'),
-                      ));
+                      ScaffoldMessenger.of(
+                        context,
+                      ).showSnackBar(SnackBar(content: Text('No result.')));
                       return;
                     }
 
