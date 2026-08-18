@@ -1,0 +1,5 @@
+{
+  "ACR_ACCESS_KEY": "your-access-key",
+  "ACR_ACCESS_SECRET": "your-access-secret",
+  "ACR_HOST": "identify-eu-west-1.acrcloud.com"
+}

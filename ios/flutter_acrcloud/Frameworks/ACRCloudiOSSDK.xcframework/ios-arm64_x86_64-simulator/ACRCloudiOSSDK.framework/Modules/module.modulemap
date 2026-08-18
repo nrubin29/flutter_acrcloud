@@ -1,0 +1,6 @@
+framework module ACRCloudiOSSDK {
+  umbrella header "ACRCloudiOSSDK.h"
+  export *
+
+  module * { export * }
+}

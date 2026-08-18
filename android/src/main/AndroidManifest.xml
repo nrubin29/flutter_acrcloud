@@ -1,2 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Declared here so apps using this plugin do not have to add it themselves. -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Recognition needs a microphone, but do not let Play Store filter out
+         devices that lack one; the rest of the app may still be useful. -->
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
 </manifest>

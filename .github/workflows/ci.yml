@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  analyze:
+    name: Analyze and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: dart run pigeon --input pigeons/messages.dart
+      - run: dart run build_runner build
+      # Pigeon's raw output is not dart-format clean, so format before diffing.
+      # The diff then catches both stale generated code and unformatted sources.
+      - run: dart format .
+      - run: git diff --exit-code
+      - run: flutter analyze
+      - run: flutter test
+
+  android:
+    name: Build Android
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+        working-directory: example
+      - run: flutter build apk --debug
+        working-directory: example
+      # The release build is what exercises R8 against consumer-rules.pro.
+      - run: flutter build apk --release
+        working-directory: example
+
+  ios-spm:
+    name: Build iOS (Swift Package Manager)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+        working-directory: example
+      - run: flutter build ios --no-codesign --debug
+        working-directory: example
+      # A dynamic binary target that fails to embed still builds, then crashes
+      # at launch. Assert it landed in the bundle.
+      - name: Assert the ACRCloud framework was embedded
+        working-directory: example
+        run: |
+          test -f build/ios/iphoneos/Runner.app/Frameworks/ACRCloudiOSSDK.framework/ACRCloudiOSSDK \
+            || (echo "ACRCloudiOSSDK.framework was not embedded" && exit 1)
+
+  ios-cocoapods:
+    name: Build iOS (CocoaPods)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: ruby -c ios/flutter_acrcloud.podspec
+      - run: flutter config --no-enable-swift-package-manager
+      - run: flutter pub get
+        working-directory: example
+      - run: flutter build ios --no-codesign --debug
+        working-directory: example

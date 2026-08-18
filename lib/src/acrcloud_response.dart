@@ -1,5 +1,3 @@
-library flutter_acrcloud;
-
 import 'package:json_annotation/json_annotation.dart';
 
 part 'acrcloud_response.g.dart';
@@ -10,20 +8,28 @@ class ACRCloudResponse {
   final ACRCloudResponseStatus status;
   final ACRCloudResponseMetadata? metadata;
 
-  const ACRCloudResponse(this.status, this.metadata);
+  const ACRCloudResponse({required this.status, this.metadata});
 
   factory ACRCloudResponse.fromJson(Map<String, dynamic> json) =>
       _$ACRCloudResponseFromJson(json);
 }
 
 /// Response status, which provides information on any errors that occurred.
+///
+/// A [code] of 0 means success. 1001 means the request succeeded but nothing
+/// matched. Every other value is an error; see
+/// https://docs.acrcloud.com/metadata/error-codes.
 @JsonSerializable()
 class ACRCloudResponseStatus {
   final String msg;
   final String version;
   final int code;
 
-  const ACRCloudResponseStatus(this.msg, this.version, this.code);
+  const ACRCloudResponseStatus({
+    required this.msg,
+    required this.version,
+    required this.code,
+  });
 
   factory ACRCloudResponseStatus.fromJson(Map<String, dynamic> json) =>
       _$ACRCloudResponseStatusFromJson(json);
@@ -32,58 +38,66 @@ class ACRCloudResponseStatus {
 /// The metadata of the response, which contains all of the matching tracks.
 @JsonSerializable()
 class ACRCloudResponseMetadata {
-  @JsonKey(defaultValue: <ACRCloudResponseMusicItem>[])
   final List<ACRCloudResponseMusicItem> music;
 
-  @JsonKey(
-      name: 'custom_files', defaultValue: <ACRCloudResponseCustomFileItem>[])
+  @JsonKey(name: 'custom_files')
   final List<ACRCloudResponseCustomFileItem> customFiles;
 
-  const ACRCloudResponseMetadata(this.music, this.customFiles);
+  /// Whether this metadata contains no matches at all.
+  bool get isEmpty => music.isEmpty && customFiles.isEmpty;
+
+  const ACRCloudResponseMetadata({
+    this.music = const [],
+    this.customFiles = const [],
+  });
 
   factory ACRCloudResponseMetadata.fromJson(Map<String, dynamic> json) =>
       _$ACRCloudResponseMetadataFromJson(json);
 }
 
 /// A single matching track.
+///
+/// Only [acrId] and [title] are guaranteed. ACRCloud omits the rest for some
+/// matches, so every other field is nullable.
 @JsonSerializable()
 class ACRCloudResponseMusicItem {
-  final String? label;
-
-  final ACRCloudResponseAlbum album;
-
-  final List<ACRCloudResponseArtist> artists;
-
   @JsonKey(name: 'acrid')
   final String acrId;
 
-  @JsonKey(name: 'result_from')
-  final int resultFrom;
-
   final String title;
 
+  final String? label;
+
+  final ACRCloudResponseAlbum? album;
+
+  final List<ACRCloudResponseArtist> artists;
+
+  @JsonKey(name: 'result_from')
+  final int? resultFrom;
+
   @JsonKey(name: 'duration_ms')
-  final int durationMs;
+  final int? durationMs;
 
   @JsonKey(name: 'release_date')
-  final String releaseDate;
+  final String? releaseDate;
 
-  final int score;
+  final int? score;
 
   @JsonKey(name: 'play_offset_ms')
-  final int playOffsetMs;
+  final int? playOffsetMs;
 
-  const ACRCloudResponseMusicItem(
-      this.label,
-      this.album,
-      this.artists,
-      this.acrId,
-      this.resultFrom,
-      this.title,
-      this.durationMs,
-      this.releaseDate,
-      this.score,
-      this.playOffsetMs);
+  const ACRCloudResponseMusicItem({
+    required this.acrId,
+    required this.title,
+    this.label,
+    this.album,
+    this.artists = const [],
+    this.resultFrom,
+    this.durationMs,
+    this.releaseDate,
+    this.score,
+    this.playOffsetMs,
+  });
 
   factory ACRCloudResponseMusicItem.fromJson(Map<String, dynamic> json) =>
       _$ACRCloudResponseMusicItemFromJson(json);
@@ -94,7 +108,7 @@ class ACRCloudResponseMusicItem {
 class ACRCloudResponseAlbum {
   final String name;
 
-  const ACRCloudResponseAlbum(this.name);
+  const ACRCloudResponseAlbum({required this.name});
 
   factory ACRCloudResponseAlbum.fromJson(Map<String, dynamic> json) =>
       _$ACRCloudResponseAlbumFromJson(json);
@@ -105,7 +119,7 @@ class ACRCloudResponseAlbum {
 class ACRCloudResponseArtist {
   final String name;
 
-  const ACRCloudResponseArtist(this.name);
+  const ACRCloudResponseArtist({required this.name});
 
   factory ACRCloudResponseArtist.fromJson(Map<String, dynamic> json) =>
       _$ACRCloudResponseArtistFromJson(json);
@@ -120,15 +134,20 @@ class ACRCloudResponseCustomFileItem {
   final String title;
 
   @JsonKey(name: 'duration_ms')
-  final int durationMs;
+  final int? durationMs;
 
-  final int score;
+  final int? score;
 
   @JsonKey(name: 'play_offset_ms')
-  final int playOffsetMs;
+  final int? playOffsetMs;
 
-  const ACRCloudResponseCustomFileItem(
-      this.acrId, this.title, this.durationMs, this.score, this.playOffsetMs);
+  const ACRCloudResponseCustomFileItem({
+    required this.acrId,
+    required this.title,
+    this.durationMs,
+    this.score,
+    this.playOffsetMs,
+  });
 
   factory ACRCloudResponseCustomFileItem.fromJson(Map<String, dynamic> json) =>
       _$ACRCloudResponseCustomFileItemFromJson(json);
