@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'flutter_acrcloud'
-  s.version          = '2.0.0'
+  s.version          = '2.0.1'
   s.summary          = 'A Flutter plugin for the ACRCloud music recognition API.'
   s.description      = <<-DESC
 A Flutter plugin for the ACRCloud music recognition API. Provides a simple

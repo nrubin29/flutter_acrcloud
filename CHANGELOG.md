@@ -1,3 +1,7 @@
+## 2.0.1
+
+* **[iOS]** Manually tweaked `ACRCloudiOSSDK`'s `CFBundleShortVersionString` to fix App Store upload failures.
+
 ## 2.0.0
 
 This is a rewrite on Flutter 3.47 with an upgraded iOS SDK and a modernized API.

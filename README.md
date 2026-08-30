@@ -105,7 +105,7 @@ Call `configure()` again before the next `startSession()`.
 
 ## Migrating from 1.x
 
-| 1.x | 2.0.0 |
+| 1.x | 2.x |
 | --- | --- |
 | `ACRCloud.setUp(config)` | `await ACRCloud.instance.configure(config)` |
 | `ACRCloud.startSession()` | `await ACRCloud.instance.startSession()` |
